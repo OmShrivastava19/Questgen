@@ -61,6 +61,22 @@ def browse():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+# @app.route('/update/<int:sno>', methods=['GET', 'POST'])
+# def update(sno):
+#     if request.method=='POST':
+#         title = request.form['title']
+#         desc = request.form['desc']
+#         quest = quest.query.filter_by(sno=sno).first()
+#         todo.title = title
+#         quest.desc = desc
+#         db.session.add(quest)
+#         db.session.commit()
+#         return redirect("/")
+        
+#     todo = Todo.query.filter_by(sno=sno).first()
+#     return render_template('update.html', todo=todo)
+
 # @app.route('/addquest')
 # def addquest():
 #     return render_template('addquest.html')
@@ -77,3 +93,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()  
     app.run(debug=True, port=5000)
+
