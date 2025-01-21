@@ -19,8 +19,17 @@ class Quest(db.Model):
     def __repr__(self) -> str:
         return f"{self.sno} - {self.subject} - {self.chapter} - {self.topic} - {self.question} - {self.diff} - {self.answer}"
 
+@app.route('/')
+def homepage():
+    allQuest = Quest.query.all()
+    return render_template('index.html', allQuest=allQuest)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/quest', methods=['GET', 'POST'])
-def hello_world():
+def quest():
     if request.method == 'POST':
         standard = request.form['standard']
         subject = request.form['subject']
@@ -36,11 +45,6 @@ def hello_world():
     allQuest = Quest.query.all()
     return render_template('add_quest.html', allQuest=allQuest)
 
-@app.route('/')
-def homepage():
-    allQuest = Quest.query.all()
-    return render_template('index.html', allQuest=allQuest)
-
 @app.route('/delete/<int:sno>')
 def delete(sno):
     quest = Quest.query.filter_by(sno=sno).first()
@@ -48,19 +52,10 @@ def delete(sno):
     db.session.commit()
     return redirect("/browse")
 
-@app.route('/quest')
-def quest():
-    allQuest = Quest.query.all()
-    return render_template('quest.html', allQuest=allQuest)
-
 @app.route('/browse')
 def browse():
     allQuest = Quest.query.all()
     return render_template('all_quest.html', allQuest=allQuest)
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 # @app.route('/update/<int:sno>', methods=['GET', 'POST'])
 # def update(sno):
@@ -76,18 +71,6 @@ def about():
         
 #     todo = Todo.query.filter_by(sno=sno).first()
 #     return render_template('update.html', todo=todo)
-
-# @app.route('/addquest')
-# def addquest():
-#     return render_template('addquest.html')
-
-# @app.route('/viewquest')
-# def viewquest():
-#     return render_template('viewquest.html')
-
-# @app.route('/editquest')
-# def editquest():
-#     return render_template('editquest.html')
 
 if __name__ == '__main__':
     with app.app_context():
