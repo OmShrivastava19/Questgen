@@ -61,4 +61,37 @@
         </div>
     </form>
 </div>
+<script>
+    const standardSelect = document.getElementById('standard');
+    const subjectSelect = document.getElementById('subject');
+
+    const subjects = {
+        '1-5': ['English', 'Hindi', 'EVS', 'Maths', 'CS'],
+        '6-10': ['English', 'Hindi', 'Maths', 'Science', 'Social Science', 'Sanskrit', 'CS'],
+        '11-12': ['Physics', 'Chemistry', 'Maths', 'Biology', 'English', 'Hindi', 'Physical Education', 'CS']
+    };
+
+    standardSelect.addEventListener('change', function() {
+        const standard = parseInt(this.value);
+        let options = [];
+
+        if (standard <= 5) {
+            options = subjects['1-5'];
+        } else if (standard <= 10) {
+            options = subjects['6-10'];
+        } else if (standard <= 12) {
+            options = subjects['11-12'];
+        }
+
+        subjectSelect.innerHTML = '';
+        options.forEach(subject => {
+            const option = document.createElement('option');
+            option.value = subject.toLowerCase();
+            option.textContent = subject;
+            subjectSelect.appendChild(option);
+        });
+    });
+    // Trigger change event to set initial options
+    standardSelect.dispatchEvent(new Event('change'));
+</script>
 {% endblock %}
